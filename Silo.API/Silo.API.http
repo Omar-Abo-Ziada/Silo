@@ -1,0 +1,6 @@
+@Silo.API_HostAddress = http://localhost:5062
+
+GET {{Silo.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
