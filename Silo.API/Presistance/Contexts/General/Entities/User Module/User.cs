@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Silo.API.Common.Contracts;
-
-namespace Silo.API.Presistance.Contexts.General.Entities.User_Module;
+﻿namespace Silo.API.Presistance.Contexts.General.Entities.User_Module;
 
 public class User : IdentityUser<int> , ISoftDeleted
 {
