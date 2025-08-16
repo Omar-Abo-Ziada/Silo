@@ -18,7 +18,8 @@ public class Program
         var configuration = builder.Configuration;
 
 
-        builder.Services.AddGeneralDbContext(configuration);
+        builder.Services.AddGeneralDbContext(configuration)
+            .AddServices();
 
         var app = builder.Build();
 
