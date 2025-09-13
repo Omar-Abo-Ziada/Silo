@@ -1,18 +1,18 @@
 ﻿namespace Silo.API.Middlewares;
 
-public class TransactionMiddleware 
+public class TransactionMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILoggerHelper<TransactionMiddleware> _logger;
 
-    public TransactionMiddleware(RequestDelegate next, ILoggerHelper<TransactionMiddleware> logger)
+    public TransactionMiddleware(RequestDelegate next)
     {
         _next = next;
-        _logger = logger;
     }
 
     public async Task InvokeAsync(HttpContext context, GeneralDbContext dbContext)
     {
+        var _logger = context.RequestServices.GetRequiredService<ILoggerHelper<TransactionMiddleware>>();
+
         // We only want to open transactions for requests that can change data.
         if (!IsTransactionalMethod(context.Request.Method))
         {

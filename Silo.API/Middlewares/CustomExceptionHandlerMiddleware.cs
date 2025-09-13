@@ -1,19 +1,21 @@
 ﻿namespace Silo.API.Middlewares;
 
-public class ExceptionHandlerMiddleware : IMiddleware
+public class CustomExceptionHandlerMiddleware
 {
-    private readonly ILoggerHelper<ExceptionHandlerMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
-    public ExceptionHandlerMiddleware(ILoggerHelper<ExceptionHandlerMiddleware> logger)
+    public CustomExceptionHandlerMiddleware(RequestDelegate next)
     {
-        _logger = logger;
+        _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context)
     {
+        var _logger = context.RequestServices.GetRequiredService<ILoggerHelper<CustomExceptionHandlerMiddleware>>();
+
         try
         {
-            await next(context);
+            await _next(context);
         }
         catch (Exception ex)
         {
@@ -30,7 +32,7 @@ public class ExceptionHandlerMiddleware : IMiddleware
         var errorMessage = "An unexpected error occurred. Please try again later.";
 
         var response = ApiResponse<object>.Failure(
-            errors: [new Error(Code: statusCode, Description: errorMessage, Type: ErrorType.General)],
+            errors: [new Error(Code: "EXCEPTIONHANDLER", Description: errorMessage, Type: ErrorType.General)],
             statusCode: statusCode
         );
 

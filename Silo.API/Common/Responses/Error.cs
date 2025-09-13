@@ -19,14 +19,14 @@ public enum ErrorType
     General
 }
 
-public sealed record Error(HttpStatusCode Code, string Description, ErrorType Type)
+public sealed record Error(string Code, string Description, ErrorType Type)
 {
     public static readonly Error None =
-        new(HttpStatusCode.OK, string.Empty, ErrorType.Failure);
+        new("NONE", string.Empty, ErrorType.Failure);
 
     public static readonly Error NullValue =
-        new(HttpStatusCode.BadRequest, "The specified result is null.", ErrorType.Failure);
+        new("NULLVALUE", "The specified result is null.", ErrorType.Failure);
 
     public static readonly Error General =
-        new(HttpStatusCode.InternalServerError, "Something went wrong, please try again later.", ErrorType.General);
+        new("GENRAL", "Something went wrong, please try again later.", ErrorType.General);
 }

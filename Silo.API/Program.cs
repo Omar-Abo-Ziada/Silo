@@ -1,4 +1,4 @@
-
+using Silo.API.Middlewares;
 
 namespace Silo.API;
 
@@ -18,10 +18,16 @@ public class Program
         var configuration = builder.Configuration;
 
 
-        builder.Services.AddGeneralDbContext(configuration)
-            .AddServices();
+        builder.Services
+            .AddGeneralDbContext(configuration)
+            .AddLogs(configuration, builder)
+            .AddServices(configuration);
+
 
         var app = builder.Build();
+
+        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+        app.UseMiddleware<TransactionMiddleware>();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

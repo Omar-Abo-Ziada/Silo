@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using Silo.API.Helpers.Mapper;
-
-namespace Silo.API.Common.Controller;
+﻿namespace Silo.API.Common.Controller;
 
 public class BaseControllerParams<TRequest>
 {

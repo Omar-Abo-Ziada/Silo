@@ -1,6 +1,6 @@
 ﻿namespace Silo.API.Helpers.Mapper;
 
-public static class MappingExtensions 
+public static class MappingExtensions
 {
     public static readonly IMapper _mapper;
 

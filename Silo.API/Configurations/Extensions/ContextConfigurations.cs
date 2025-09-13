@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace Silo.API.Configurations.Extensions;
 
 public static class ContextConfigurations
@@ -7,6 +9,7 @@ public static class ContextConfigurations
     {
         services.AddDbContext<GeneralDbContext>(options =>
              options.UseSqlServer(configuration.GetConnectionString("Default"))
+             .LogTo(action => Debug.WriteLine(action), LogLevel.Information)
              .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
         return services;

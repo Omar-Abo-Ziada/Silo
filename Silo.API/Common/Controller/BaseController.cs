@@ -20,8 +20,8 @@ public class BaseController<TRequest, TResponse>(BaseControllerParams<TRequest> 
 
 
         var validationErrors = string.Join(", ", validationResults.Errors.Select(e => e.ErrorMessage));
-        var errMsg = string.Format("Validation failed:\n {0}", validationErrors);
-        var error = new Error(HttpStatusCode.BadRequest, errMsg, ErrorType.Validation);
+        var errMsg = string.Format("Validation failed: {0}", validationErrors);
+        var error = new Error("VALIDATION.FAILED", errMsg, ErrorType.Validation);
         return ApiResponse<TResponse>.Failure(errors: [error]);
     }
 
@@ -29,7 +29,7 @@ public class BaseController<TRequest, TResponse>(BaseControllerParams<TRequest> 
     {
         if (result is { IsSuccess: true, Data: null })
             return ApiResponse<TDist>.Success();
-        return result.IsSuccess ? ApiResponse<TDist>.Success(data: result.Data.Adapt<TDist>()):
+        return result.IsSuccess ? ApiResponse<TDist>.Success(data: result.Data.Adapt<TDist>()) :
             ApiResponse<TDist>.Failure(errors: result.Errors);
     }
 }
